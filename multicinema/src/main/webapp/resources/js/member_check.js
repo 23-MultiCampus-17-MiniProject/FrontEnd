@@ -1,90 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>멀티시네마 가입여부 확인</title>
-
-<style>
-	html{
-		text-align:center;
-	}
-	#container{
-		height: 460px;
-	}
-	#contents{
-		height: 460px;
-	}
-	.text_box {
-		width: 550px;
-		float: right;
-		margin-left: 250px;
-		text-align: left;
-	}
-	
-	#check{
-		height:400px;
-		background-color:  rgb(192, 192, 192,0.1);
-		width: 800px;
-		margin:0 auto;
-		
-	}
-	#contents_header{
-		height:64px;
-	}
-	#check_member_form{
-		margin-top: 60px;
-		height: 180px;
-	}
-	#info{
-		padding-top: 20px;
-		height: 20%;
-		line-height: 40px;
-	}
-	#btn_confirm_wrap{
-		display: inline-block;
-		margin-top: 40px;
-	}
-	#btn_confirm{
-		text-decoration: none;
-		color: black;
-	}
-	#btn_confirm > div{
-		
-		background-color: rgb(254, 228, 1);
-		border-radius: 10px;
-		width: 130px;
-		height: 60px;
-		line-height: 60px;
-	}
-	.error_message{
-		font-size: 12px;
-		color: red;
-	}
-</style>
-<link rel="stylesheet" type="text/css" href="css/index.css">
-</head>
-<header class="body">
-	<div class="header">
-		<h1 class="mainlogo">
-			<a href="mainpage.html" title="홈화면으로 가기">홈으로가기</a>
-		</h1>
-		<div class="myinformation">
-			<a href="mainpage.html">로그인하기</a>
-			<a href="signin.html">회원가입</a>
-		</div>
-	</div>
-		
-	<hr>
-	<ul id="mainNavigator">
-		<li id="movie"><a href="movie.html">영화</a></li>
-		<li id="ticketing"><a href="timetable_select.html">예매</a></li>
-		<li id="theater"><a href="theater.html">영화관</a></li>
-	</ul>
-	<hr>
-</header>
-<script>
 //아이디 입력
 //아이디가 조건에 맞는지(글자수 8~15글자, 영어,숫자만)
 //안맞으면 member_validating에 focus가 사라진 뒤 오류메세지를 띄우게
@@ -194,59 +107,14 @@
 			let tmp = email_select.value == "직접입력"? user_email_dir.value : email_select.value
 			let email = user_email.value + "@" + tmp;
 			let id = user_id.value;
+			document.getElementById("user_email_check").value = email;
+			document.getElementById("user_id_check").value = id;
+			
 			if(!email_reg.test(email) || !user_id_reg.test(id)){
 				e.preventDefault();
 				alert("다시 입력해주세요");
-			}else if(false){
-				e.preventDefault();
-				alert("중복된 아이디 입니다");
-				//db에서 끌고오는 걸 어떤 식으로 구현 해놓을까
-			}
-			else{
-				btn_confirm.setAttribute("href", "member_join.html?" + "id="+id +"&em="+email);
-				alert("인증되었습니다");
-				
+			}else{
+
 			}
 		}
 	}
-</script>
-</head>
-<body>
-<div id="container">
-	<div id="contents">
-		<div id="contents_header">
-			<h1>Multi Cinema 가입여부 확인</h1>
-		</div>
-		<div id="check">
-			<div id="info">
-				<P>회원 가입 여부 확인을 위해 개인정보를 정확히 입력해주세요<br>
-					입력하신 정보는 가입 여부 확인에만 사용되며 저장되지 않습니다
-				</P>
-			</div>
-			<div id="check_member_form">
-				<div class="text_box">
-					아이디 <input type="text" class="text" id="user_id" placeholder="아이디를 입력해주세요.">
-					<p class="error_message" id="user_id_errmsg" style="visibility: hidden"></p>
-				</div>
-				<div class="text_box">
-					이메일 <input type="text" class="text" id="user_email" placeholder="이메일을 입력해주세요">
-					@
-					<select id="email_select">
-						<option>naver.com</option>
-						<option>google.com</option>
-						<option>daum.net</option>
-						<option>직접입력</option>
-					</select>
-					<input type="text" class="text" id="user_email_dir" placeholder="도메인을 입력해주세요" style="visibility: hidden">
-					<p class="error_message" id="user_email_errmsg" style="visibility: hidden"></p>
-				</div>
-				
-				<div id="btn_confirm_wrap">
-					<a href="member_join.html" id="btn_confirm"><div>가입여부 확인</div></a>
-				</div> 
-			</div>
-		</div>
-	</div> 
-</div>
-</body>
-</html>
