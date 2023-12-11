@@ -1,0 +1,29 @@
+package com.mc.multicinema.moviecomment.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.mc.multicinema.moviecomment.dto.MovieCommentDTO;
+
+@Repository
+public class MovieCommentDAO {
+	@Autowired
+	SqlSession session;
+	
+	public List<MovieCommentDTO> selectMovieCommentsInit(String movie_cd, String commentsNum) {
+		HashMap<String, Integer> map = new HashMap<>();
+		Integer movie_cd_parse = Integer.parseInt(movie_cd);
+		Integer commentsNum_parse = Integer.parseInt(commentsNum);
+		map.put("movie_cd", movie_cd_parse);
+		map.put("commentsNum", commentsNum_parse);
+		
+		List<MovieCommentDTO> list = session.selectList("selectMovieCommentInit", map);
+		
+		return list;
+	}
+
+}

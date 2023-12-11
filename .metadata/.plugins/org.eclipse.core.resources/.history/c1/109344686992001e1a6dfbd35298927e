@@ -1,0 +1,44 @@
+package board.spring.mybatis;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class BoardController {
+	@Autowired
+	BoardService service;
+	
+	@RequestMapping("/")
+	String Start() {
+		return "board/start";
+	}
+	
+	@GetMapping("/boardwrite")
+	String boardwrite() {
+		return "board/write";
+	}
+	
+	@PostMapping("/boardwrite")
+	ModelAndView writeProcess(BoardDTO dto) {
+		service.registerBoard(dto);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("board/start");
+		return mv;
+	}
+	
+	@RequestMapping("/boardlist")
+	ModelAndView boardlist(int pagenum) {
+		if(pagenum == 0) {
+			pagenum = 1;
+		}
+		int pagecount = 3;
+		BoardDTO dto = service.pagingBoardlist(pagenum, pagecount);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("board/boardlist")
+	}
+	
+}

@@ -1,0 +1,9 @@
+package com.mc.multicinema.user.service;
+
+import com.mc.multicinema.user.dto.UserDTO;
+
+public interface UserService {
+
+	UserDTO login();
+
+}

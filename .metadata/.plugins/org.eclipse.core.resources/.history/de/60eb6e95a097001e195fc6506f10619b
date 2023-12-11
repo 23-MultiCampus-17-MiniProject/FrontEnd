@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="user">
+<select id="login" parameterType="hashmap" resultType="userdto">
+select * from user_info where user_id = #{user_id} and user_pw = #{user_pw}
+</select>
+<select id="selectMemberCheck" parameterType="hashmap" resultType="userdto">
+select * from user_info where user_id = #{user_id} or user_email = #{user_email}
+</select>
+<insert id="memberInsert" parameterType="userdto">
+insert into user_info(user_id, user_email, user_pw, user_regdate, user_birthday, user_pw_salt, user_name) 
+values(#{user_id}, #{user_email}, #{user_pw}, now(), #{user_birth_day}, 'a', #{user_name})
+</insert>
+</mapper>

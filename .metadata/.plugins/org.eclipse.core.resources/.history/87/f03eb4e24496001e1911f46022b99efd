@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="moviecomment">
+<insert id="insertMovieComment" parameterType="mcommentdto">
+insert into movie_comment(user_key, comment_write_date, movie_cd, comment_content, comment_score) 
+values(9, now(), 20212866, "최고의 영화입니다 모두들 꼭보세요!", 4);
+</insert>

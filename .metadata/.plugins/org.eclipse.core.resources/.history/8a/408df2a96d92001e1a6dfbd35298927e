@@ -1,0 +1,27 @@
+package board.spring.mybatis;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class BoardDAO {
+	@Autowired
+	SqlSession session;
+	
+	public int insertBoardDTO(BoardDTO dto) {
+		
+		return session.insert("insertBoardDTO" ,dto);
+	}
+
+	
+
+	public List<BoardDTO> pagingBoardlist(HashMap<String, Integer> map) {
+		
+		return session.selectList("selectPasingBoardlist", map);
+	}
+
+}

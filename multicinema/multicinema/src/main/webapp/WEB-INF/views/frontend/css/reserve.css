@@ -1,0 +1,21 @@
+#body{
+	width:75%;
+	margin:5px auto;
+}
+.table{
+	margin:5px auto;
+}
+.btn{
+	padding:8px 6px;
+}
+.movie_select{
+	padding:5px 0px;
+	margin:2px 0px;
+}
+.movie_select:hover{
+	background-color:lightgray;
+}
+.select_time{
+	padding:7px;
+	margin:2px;
+}

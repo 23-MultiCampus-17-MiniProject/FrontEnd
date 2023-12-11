@@ -1,0 +1,15 @@
+package com.mc.multicinema;
+
+public class UserDTO {
+	
+	String user_key;
+	String user_email;
+	String user_pw;
+	String user_regdate;
+	String user_birthday;
+	String user_pw_salt;
+	boolean is_deleted;
+	String deleted_date;
+	String user_name;
+	
+}

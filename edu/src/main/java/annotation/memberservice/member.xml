@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- 
+@Autowired
+MemberDTO dto; <bean 태그 dto1 2 3 >+ annotation까지 있는데 누구를 연결시킬까?
+
+=>
+@Autowired
+@Qualifier("dto2") dto타입 여러개 중에 무얼 연결시킬지
+MemberDTO dto;
+ -->
+
+<bean id="dto2" class="annotation.memberservice.MemberDTO">
+	<property name="memberid" value="spring2" />
+	<property name="pw" value="4321" />
+	<property name="membername" value="홍길동" />
+	<property name="phone" value="010-1230-2140" />
+	<property name="email" value="12321@adkoawp.com" />
+	<property name="regdate" value="2013-11-24 12:21:10" />
+</bean>
+<bean id="dto1" class="annotation.memberservice.MemberDTO">
+	<property name="memberid" value="spring0" />
+	<property name="pw" value="12340" />
+	<property name="membername" value="홍길동" />
+	<property name="phone" value="010-1230-2140" />
+	<property name="email" value="12321@adkoawp.com" />
+	<property name="regdate" value="2013-11-24 12:21:10" />
+</bean>
+<!-- 기본생성자가 아닌 매개변수있는 생성자로 객체 생성시 -->
+<bean id="dto3" class="annotation.memberservice.MemberDTO">
+	<constructor-arg name="memberid" value="spring3" />
+	<constructor-arg name="pw" value="4321"  />
+	<constructor-arg name = "membername" value="홍길동" />
+	<constructor-arg name = "phone" value="010-1230-2140" />
+	<constructor-arg name = "email" value="12321@adkoawp.com" />
+	<constructor-arg name = "regdate" value="2013-11-24 12:21:10" />
+</bean>
+
+
+<bean id="pointdao" class="annotation.memberservice.PointDAO">
+	<property name="point" value="10000" />
+</bean>
+
+<!-- annotation을 어느범위에서 찾아라고하는걸 지정해줌
+그냥쓰면 못쓰고 Namespace에 들어가서 context체크해줘야함 jstl과 비슷 -->
+<context:component-scan base-package="annotation.memberservice"></context:component-scan>
+</beans>

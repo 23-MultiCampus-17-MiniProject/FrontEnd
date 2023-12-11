@@ -1,0 +1,5 @@
+package com.mc.multicinema.user.dao;
+
+public class UserDAO {
+
+}

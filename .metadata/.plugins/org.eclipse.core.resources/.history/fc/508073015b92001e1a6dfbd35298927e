@@ -1,0 +1,5 @@
+package board.spring.mybatis;
+
+public class MemberBoardController {
+
+}

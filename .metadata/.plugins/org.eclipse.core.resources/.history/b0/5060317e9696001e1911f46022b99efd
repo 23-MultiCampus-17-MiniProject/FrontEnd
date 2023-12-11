@@ -1,0 +1,19 @@
+package com.mc.multicinema.moviecomment.service;
+
+import org.springframework.stereotype.Service;
+
+import com.mc.multicinema.moviecomment.dao.MovieCommentDAO;
+import com.mc.multicinema.moviecomment.dto.MovieCommentDTO;
+
+@Service
+public class MovieCommentServiceImpl implements MovieCommentService{
+	MovieCommentDAO dao;
+	
+	@Override
+	public int movieCommentInsert(MovieCommentDTO dto) {
+		return dao.movieCommentInsert(dto);
+	}
+	
+	
+	
+}

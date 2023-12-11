@@ -1,0 +1,21 @@
+INDEX VERSION 1.131
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2069240639.index
+\edu\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\416168122.index
+\nonspring\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3295756573.index
+\com.mc.multicinema\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1840387582.index
+\multicinema\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\529969030.index
+\edu\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\780263880.index
+\edu\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4030086971.index
+\edu\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\367580900.index
+\edu\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3040798227.index
+\edu\src\main\java
+C:\fullstack\workspace_spring\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3533829552.index
+\edu\src\main\java

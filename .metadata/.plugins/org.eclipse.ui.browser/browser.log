@@ -1,0 +1,11 @@
+
+11월 28, 2023 16:03:47.816 NEW SESSION
+11월 28, 2023 16:03:47.817 [17664:9708:1128/160347.807:ERROR:external_registry_loader_win.cc(144)] Missing value path for key Software\Google\Chrome\Extensions\efaidnbmnnnibpcajpcglclefindmkaj.
+
+12월 07, 2023 24:22:31.53 NEW SESSION
+12월 07, 2023 24:22:31.53 [17140:16416:1207/002231.050:ERROR:device_event_log_impl.cc(192)] [00:22:31.050] USB: usb_service_win.cc:307 SetupDiEnumDeviceInterfaces: 사용 가능한 데이터가 없습니다. (0x103)
+12월 07, 2023 01:02:55.449 [17140:16416:1207/010255.447:ERROR:CONSOLE(1)] "Request Runtime.evaluate failed. {"code":-32602,"message":"uniqueContextId not found"}", source: devtools://devtools/bundled/devtools-frontend/front_end/core/protocol_client/protocol_client.js (1)
+12월 07, 2023 01:02:55.451 [17140:16416:1207/010255.448:ERROR:CONSOLE(1)] "uniqueContextId not found", source: devtools://devtools/bundled/devtools-frontend/front_end/core/sdk/sdk.js (1)
+12월 07, 2023 01:02:55.454 [17140:16416:1207/010255.448:ERROR:CONSOLE(1)] "Extension server error: Inspector protocol error: uniqueContextId not found", source: devtools://devtools/bundled/devtools-frontend/front_end/models/extensions/extensions.js (1)
+12월 07, 2023 01:02:55.455 [17140:16416:1207/010255.448:ERROR:CONSOLE(1)] "Received error with code E_PROTOCOLERROR while checking if react has loaded: "Inspector protocol error: %s"", source: chrome-extension://fmkadmapgofadopljbjfkapdkoienihi/build/main.js (1)
+12월 07, 2023 01:04:21.397 [17140:16416:1207/010421.396:ERROR:CONSOLE(0)] "ReferenceError: dragEvent is not defined", source:  (0)

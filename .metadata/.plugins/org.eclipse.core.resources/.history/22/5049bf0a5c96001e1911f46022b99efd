@@ -1,0 +1,6 @@
+package com.mc.multicinema.user.service;
+
+public class UserServiceImpl implements UserService{
+	
+
+}

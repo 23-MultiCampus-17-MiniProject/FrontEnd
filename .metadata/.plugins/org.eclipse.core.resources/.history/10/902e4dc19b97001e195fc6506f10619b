@@ -1,0 +1,11 @@
+package com.mc.multicinema.user.service;
+
+import com.mc.multicinema.user.dto.UserDTO;
+
+public interface UserService {
+
+	UserDTO loginProcess(String user_id, String user_pw);
+
+	UserDTO memberCheck(String user_id, String user_email);
+
+}

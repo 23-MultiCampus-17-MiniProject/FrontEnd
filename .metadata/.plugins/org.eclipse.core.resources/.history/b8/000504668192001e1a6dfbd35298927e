@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#deletebtn").on("click", ()=>{
+		let pw = prompt("비번 입력")
+		if($("#hiddenpw").val() == pw){
+			location.href = "/boarddelete?seq"+$("#seq").val();
+		}else{
+			alert("비밀번호가 맞지 않습니다");
+		}
+	});
+	
+	
+});
+</script>
+<body>
+<!--  모델 출력 -->
+<h1>${dto.title }</h1>
+<h3 id="seq">${dto.seq }</h3>
+<h3>${dto.contents }</h3>
+<h3>${dto.viewcount }</h3>
+<h3>${dto.writer }</h3>
+<h3>${dto.writingtime }</h3>
+<input id="hiddenpw" type="hidden" value="${dto.pw }">
+<!-- 수정, 삭제 버튼 -->
+<input id="updatebtn" type="button" value="수정">
+<input id="deletebtn" type="button" value="삭제">
+</body>
+</html>

@@ -1,0 +1,76 @@
+$(document).ready(function(){
+
+	let commentsStart = 10; //moviedetail 시작시에 처음 페이지에는 몇개를 띄워줄지 정보를 넘겨받는 걸로
+		$("#more_comments_btn").on("click", function(){
+			let commentsCount = 10;
+			let hidden_movie_cd = $("#hidden_movie_cd").val();
+			$.ajax({
+				url: "morecomment",
+				data:{'movie_cd': hidden_movie_cd, 'commentsCount': commentsCount, 'commentsStart': commentsStart},
+				type: 'post',
+				dataType: 'json',
+				success: function(response){
+					if(response == null){
+						$("#more_comments_btn").attr("style", "display:none");
+					}else{
+						console.log("response.length"+response.length);
+						for(let i = 0; i < response.length; i++){
+							console.log("반복문: "+i);
+							let part = "";
+									
+							document.getElementById("movie_comments_list").innerHTML=`
+							<div class="comments" id='${response[i].comment_num}'>
+								<div>
+									<div class="comments_id" style="display: inline-block">
+										${response[i].user_id}
+									</div>
+									<span>
+										평점
+									</span>
+									<span class="comment_score">
+										${response[i].comment_score}
+									</span>
+									<div class="like_btn"  style="display: inline-block">
+										<img src="resources/images/like.png"  ><span class="comment_like">${response[i].comment_like}</span>
+									</div>
+								</div>
+								
+								<div>
+									<div class="comments_date" style="display: inline-block">
+										${response[i].comment_write_date}
+									</div>
+									${part}
+								</div>
+								<div class="comments_contents">
+									${response[i].comment_content}
+								</div>
+							</div>`
+						}//for end
+					}//if-else end
+				},//success end
+				error: function(request, e){
+					alert("코드=" + request.status + " 메세지=" + request.responseText + " 오류=" + e);
+				}
+			});
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+	
+
+	
+	
+	
+			

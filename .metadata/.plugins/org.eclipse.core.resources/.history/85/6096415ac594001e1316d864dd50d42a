@@ -1,0 +1,7 @@
+package com.mc.multicinema;
+
+public class UserDislikeBoardDTO {
+	
+	int user_key;
+	int board_num;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="dto2" class="member.MemberDTO"> <!-- 기본생성자 호출 -->
+	<property name="memberid" value="spring2" />
+	<property name="pw" value="4321" />
+	<property name="membername" value="홍길동" />
+	<property name="phone" value="010-1230-2140" />
+	<property name="email" value="12321@adkoawp.com" />
+	<property name="regdate" value="2013-11-24 12:21:10" />
+</bean>
+<bean id="dto1" class="member.MemberDTO">
+	<property name="memberid" value="spring" />
+	<property name="pw" value="1234" />
+	<property name="membername" value="홍길동" />
+	<property name="phone" value="010-1230-2140" />
+	<property name="email" value="12321@adkoawp.com" />
+	<property name="regdate" value="2013-11-24 12:21:10" />
+</bean>
+<bean id="dto3" class="member.MemberDTO">
+	<constructor-arg name="memberid" value="spring3" />
+	<constructor-arg name="pw" value="4321"  />
+	<constructor-arg name = "membername" value="홍길동" />
+	<constructor-arg name = "phone" value="010-1230-2140" />
+	<constructor-arg name = "email" value="12321@adkoawp.com" />
+	<constructor-arg name = "regdate" value="2013-11-24 12:21:10" />
+</bean>
+
+<bean id="dao" class="member.MemberDAO">
+	<property name="dto" ref="dto3" />	
+</bean>
+<!-- 
+MemberDTO dot = new MemberDTO() 스프링에게 객체를 만들어줘
+dto1.setMemberid("spring") 값 설정은 어떻게?? => property
+dto1.setPw("1234")
+...
+
+MemberDAO dao = new MemberDAO(); => 객체생성 필요? bean태그
+dao.setDto(dto1); => 객체 전달 setDto이므로 set빼고 앞글자 소문자 => name = "dto"
+				  => 매개변수가 객체일 경우 ref 속성으로 전달
+dao.selectMember();
+dao.insertMember();
+
+ -->
+</beans>

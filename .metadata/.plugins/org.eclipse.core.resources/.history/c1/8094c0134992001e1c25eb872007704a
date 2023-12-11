@@ -1,0 +1,8 @@
+package board.spring.mybatis;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class BoardDAO {
+
+}

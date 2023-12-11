@@ -1,0 +1,27 @@
+package com.mc.multicinema.user.service;
+
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.mc.multicinema.user.dao.UserDAO;
+import com.mc.multicinema.user.dto.UserDTO;
+
+public class UserServiceImpl implements UserService{
+	@Autowired
+	UserDAO userdao;
+	
+	@Override
+	public UserDTO loginProcess(String user_id, String user_pw) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("user_pw", user_pw);
+		
+		return userdao.loginProcess(map);
+		
+		 
+	}
+	
+
+}

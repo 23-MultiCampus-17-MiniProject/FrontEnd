@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!-- mapper 태그가 대장이야 -->
+  
+<mapper namespace="b"><!-- 같은 이름의 id가 있을수 있기때문에 구분용 -->
+<select id="memberPagingList" resultType="memberdto" parameterType="int">
+select * from members order by regdate desc limit
+	<foreach collection="list" item="num" separator=",">
+		#{num}
+	</foreach>
+</select>
+<select id="searchList" resultType="memberdto" parameterType="hashmap">
+select * from members where ${colname} like #{colvalue}
+</select>
+
+<select id="searchList2" resultType="memberdto" parameterType="String">
+select * from members where
+	<if test='memberid != null and memberid != "-"'> <!-- 오류 -->
+		memberid=#{memberid}
+	</if>
+	<if test="memberid == null or memberid == '-' ">
+		memberid is not null
+	</if>
+</select>
+<!-- db내에서 함수로 가공해서 가지고 온 데이터는 dto내에 데이터를 넣을 변수를 하나 정해서 as -->
+<!-- <select id="concatList" resultType="memberdto">
+select concat(memberid, '회원님 이름', membername, '입니다') as memberid , email, phone from members
+</select> -->
+<select id="concatList" resultType="memberdto">
+select concat(memberid, '회원님 이름', membername, '입니다') , email, phone from members
+</select>
+<resultMap type="memberdto" id="membermap">
+	<result column="concat(memberid, '회원님 이름', membername, '입니다')" property="memberid"/>
+	<!-- column라는 컬럼이 있냐 있으면 memberid에 set -->
+	<!-- email, phone은 컬럼과 dto변수명이 같아서 따로 해줄 필요 x -->
+</resultMap>
+
+<select id="memberSearchList" resultType="memberdto" parameterType="hashmap">
+select * from members where ${colname} like concat('%',#{colvalue},'%')
+</select>
+
+<select id="totalMemberCount" resultType="int">
+select count(*) from members
+</select>
+
+<select id="searchMemberCount" resultType="int" parameterType="hashmap">
+select count(*) from members where ${colname} like concat('%',#{colvalue},'%')
+</select>
+</mapper>

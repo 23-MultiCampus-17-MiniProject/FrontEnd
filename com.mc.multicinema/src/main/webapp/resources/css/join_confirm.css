@@ -1,0 +1,56 @@
+@charset "UTF-8";
+	#container{
+		height: 460px;
+	}
+	#contents{
+		height: 460px;
+	}
+	.text_box {
+		width: 550px;
+		float: right;
+		margin-left: 250px;
+		text-align: left;
+	}
+	
+	#check{
+		height:400px;
+		background-color:  rgb(192, 192, 192,0.1);
+		width: 800px;
+		margin:0 auto;
+		
+	}
+	#contents_header{
+		height:64px;
+		text-align: center;
+	}
+	#check_member_form{
+		margin-top: 60px;
+		height: 180px;
+		text-align: center;
+	}
+	#info{
+		padding-top: 20px;
+		height: 20%;
+		line-height: 40px;
+		text-align: center;
+	}
+	#btn_confirm_wrap{
+		display: inline-block;
+		margin-top: 40px;
+		text-align: center;
+	}
+	#btn_confirm{
+		text-decoration: none;
+		color: black;
+		background-color: rgb(254, 228, 1);
+		border-radius: 10px;
+		width: 130px;
+		height: 60px;
+		line-height: 60px;
+		cursor: pointer;
+	}
+	
+	.error_message{
+		font-size: 12px;
+		color: red;
+	}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="moviecomment">
+<insert id="insertMovieComment" parameterType="mcommentdto">
+insert into movie_comment(user_key, comment_write_date, movie_cd, comment_content, comment_score) 
+values(#{user_key}, now(), #{movie_cd}, #{comment_content}, #{comment_score});
+</insert>
+<select id="selectMovieCommentInit" parameterType="hashmap" resultType="mcommentdto">
+select * from movie_comment where movie_cd=#{movie_cd} order by comment_write_date desc limit 0, #{commentsNum}
+</select>
+</mapper>

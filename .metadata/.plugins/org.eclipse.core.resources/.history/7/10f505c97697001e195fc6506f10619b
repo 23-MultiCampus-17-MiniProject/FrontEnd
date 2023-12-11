@@ -1,0 +1,25 @@
+package com.mc.multicinema.moviecomment.service;
+
+import java.util.List;
+
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mc.multicinema.moviecomment.dto.MovieCommentDTO;
+
+public interface MovieCommentService {
+
+	int insertMovieComment(MovieCommentDTO dto);
+
+	String likeAdd(Integer comment_num_parsed, Integer user_key_parsed);
+
+	int deleteComment(int comment_num);
+
+	int updateMovieComment(MovieCommentDTO dto);
+	
+	List<MovieCommentDTO> movieCommentsInit(String movie_cd);
+
+	List<MovieCommentDTO> moreComment(String movie_cd, String commentsStart, String commentsCount);
+
+	
+
+}

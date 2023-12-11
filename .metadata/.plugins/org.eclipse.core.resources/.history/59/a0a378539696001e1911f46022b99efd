@@ -1,0 +1,7 @@
+package com.mc.multicinema.moviecomment.service;
+
+public class MovieCommentServiceImpl implements MovieCommentService{
+	
+	
+	
+}

@@ -1,0 +1,156 @@
+package com.mc.multicinema;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mc.multicinema.moviecomment.dto.MovieCommentDTO;
+import com.mc.multicinema.moviecomment.service.MovieCommentService;
+import com.mc.multicinema.moviecomment.service.MovieCommentServiceImpl;
+import com.mc.multicinema.user.dto.UserDTO;
+import com.mc.multicinema.user.service.UserService;
+
+
+@Controller
+public class HomeController {
+	@Autowired
+	MovieService service;
+	@Autowired
+	UserService userservice;
+	@Autowired
+	MovieCommentService moviecommentservice;
+	
+	@RequestMapping("/")
+	public ModelAndView home() {
+		
+		ArrayList<DailyBoxOfficeDTO> list = service.dailyBoxOffice();
+		System.out.println("컨트롤러" + list.size());
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("movielist", list);
+		mv.setViewName("mainpage");
+		
+		return mv;
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		//로그인 이미 했을때 처리
+		return "login";
+	}
+	
+	@PostMapping("/login")
+	public String loginProcess(String user_id, String user_pw, Model m, HttpSession session) {
+		
+		//id, pw 정보 있는지 확인
+		//있으면 return 로그인을 눌렀던 그 페이지로
+		//정보 있음
+		System.out.println("=====================con"+user_id + user_pw+"=====================");
+		UserDTO dto = userservice.loginProcess(user_id, user_pw);
+		
+		if(dto != null && dto.getUser_key() != null && dto.getUser_name() != null && dto.getUser_id() != null) {
+			session.setAttribute("login_user_id", dto.getUser_id());
+			session.setAttribute("login_user_key", dto.getUser_key());
+			session.setAttribute("login_user_name", dto.getUser_name());
+			
+			
+			//세션에 추가할 것
+			//user_key,
+			//아이디, 이름,
+			return "redirect:/";
+		}else {
+			m.addAttribute("result", "아이디와 비밀번호가 일치하지 않습니다");
+			return "login";
+		}
+	}
+	
+	@GetMapping("/membercheck")
+	public String memberCheck() {
+		return "member_check";
+	}
+	
+	@PostMapping("/membercheck")
+
+	public String memberCheckProcess(String user_id, String user_email, Model m) {
+		
+		//서비스 dao 멤버 있는지 확인 후
+		//있다 modelandview 생성 후 model에 아이디 이메일값 넣어주고 회원가입 페이지로
+		//없다 modelandview 생성 후 model에 이미 있는 회원이다 하고 모델만 주기
+		//jsp에선 ${모델이름명}으로 들고와서 스크립트에서 alert 띄워주기
+		if(user_id.equals("testid")&& user_email.equals("testemail@naver.com")) {
+			m.addAttribute("result", "가입가능");
+			m.addAttribute("user_id", user_id);
+			m.addAttribute("user_email", user_email);
+			return "member_check";
+		}else {
+			m.addAttribute("result", "이미 존재하는 회원입니다");
+			return "member_check";
+		}
+	}
+	
+	@GetMapping("/memberjoin")
+	public String memberjoinDeny() {
+		
+		return null;
+	}
+	
+	@PostMapping("/memberjoin")
+	public ModelAndView memberjoin(String user_id, String user_email) {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user_id", user_id);
+		mv.addObject("user_email", user_email);
+		mv.setViewName("member_join");
+		
+		return mv;
+	}
+	
+	@PostMapping("/welcome")
+	public String welcome(UserDTO dto, Model m) {
+		
+		m.addAttribute("user_name", dto.getUser_name());
+		return "welcome";
+	}
+	
+	@GetMapping("/moviedetail")
+	public ModelAndView movieDetail(String movieCd, HttpSession session) {
+		
+		//service.selectMovieDetailInfo(movieCd);
+		List<MovieCommentDTO> commentlist = service.movieCommentsInit(movieCd);
+		//null일 경우 처리;
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("movie_cd", movieCd);
+		mv.addObject("commentlist", commentlist);
+		mv.setViewName("movie_detail");
+		return mv;	
+	}
+	
+	@PostMapping("/moviedetail")
+	public String insertMovieComment(MovieCommentDTO dto, HttpSession session) {
+		//한줄평 받아야할 정보
+		//유저 키, 컨텐츠, 점수, 영화코드
+		 int result = moviecommentservice.insertMovieComment(dto);
+		 
+		 String message = "";
+		 if(result == -2) {
+			 message = "이미 한줄평을 등록하셨습니다";
+		 }else if(result == -1) {
+			 message = "db 등록 오류";
+		 }else {
+			 message = "등록되었습니다";
+		 }
+		 
+		 session.setAttribute("message", message);
+		 
+		 return "redirect:/moviedetail?movieCd=" + dto.getMovie_cd();
+		
+	}
+}

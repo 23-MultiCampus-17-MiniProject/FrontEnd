@@ -1,0 +1,13 @@
+package com.mc.multicinema.moviecomment.service;
+
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mc.multicinema.moviecomment.dto.MovieCommentDTO;
+
+public interface MovieCommentService {
+
+	int insertMovieComment(MovieCommentDTO dto);
+
+	
+
+}

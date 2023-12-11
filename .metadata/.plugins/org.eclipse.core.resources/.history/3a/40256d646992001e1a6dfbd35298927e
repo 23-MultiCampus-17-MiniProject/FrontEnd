@@ -1,0 +1,9 @@
+package board.spring.mybatis;
+
+public interface BoardService {
+
+	int registerBoard(BoardDTO dto);
+
+	
+	
+}

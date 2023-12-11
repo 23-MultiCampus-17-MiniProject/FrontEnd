@@ -1,0 +1,26 @@
+package board.spring.mybatis;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BoardServiceImpl implements BoardService{
+	
+	@Autowired
+	BoardDAO dao;
+
+	@Override
+	public int registerBoard(BoardDTO dto) {
+		
+		return dao.insertBoardDTO(dto);
+	}
+
+	@Override
+	public BoardDTO pagingBoardlist(int pagenum, int pagecount) {
+		int idxStart = pagenum * pagecount;
+		return dao.pagingBoardlist(idxStart, pagecount);
+	}
+	
+	
+	
+}

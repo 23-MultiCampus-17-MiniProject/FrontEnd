@@ -1,0 +1,5 @@
+package com.mc.multicinema.moviecomment.dao;
+
+public class MovieCommentDAO {
+
+}

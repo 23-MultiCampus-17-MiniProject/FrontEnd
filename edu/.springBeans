@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.9.18.202109140629-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>src/main/java/spring/tv/tv.xml</config>
+		<config>src/main/java/member/member.xml</config>
+		<config>src/main/java/aop1/aop1.xml</config>
+		<config>src/main/java/unesu/figure.xml</config>
+		<config>src/main/java/aopanimal/animal.xml</config>
+		<config>src/main/java/spring/mybatis/service/spring-mybatis.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

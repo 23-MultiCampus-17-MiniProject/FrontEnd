@@ -1,0 +1,21 @@
+onload = function() {
+	console.log("테스트");
+	
+	let test = `하이
+	반갑다
+	
+	
+	
+	
+	
+	키키키키키키
+	`;
+	
+	console.log(test);
+	
+
+	
+	
+	
+			
+}

@@ -1,0 +1,309 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.mc.multicinema.moviecomment.dto.MovieCommentDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MultiCinema</title>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/movie_detail.css">
+<script src="resources/js/movie_detail.js"></script>
+<script>
+
+$(document).ready(function(){
+	$("#write_btn").on('click', function(e){
+		if("${login_user_id}" == ""){
+			let res = confirm("한줄평은 로그인 후 등록 가능합니다. 로그인하시겠습니까?");
+			if(res == true){
+				location.href = "/login";
+				//이 부분은 나중에 확인
+			}
+		}else{
+			e.submit();
+		}
+	});
+	
+let movie_comments_list = document.getElementById("movie_comments_list");
+	
+	//like_add_event();
+	//comments_CD();
+
+	
+	function clear_write_comments(){
+		write_btn.innerHTML = "쓰기";
+		writing_commentbox.value = ""
+		click_star_idx = 0;
+		re_rendering_star();
+		addEvent();
+		addClickEvent();
+	}
+	
+	//수정 및 삭제 버튼의 이벤트 처리
+	let modify_btn = false;
+	function comments_CD(){
+		let my_comments_modify_btn = document.getElementById("my_comments_modify_btn");
+		my_comments_modify_btn.addEventListener("click", function () {
+			// 수정버튼 숨기기
+			my_comments_modify_btn.style = 'visibility: hidden';
+			//
+			click_star_idx =  comments_obj_arr[login_user.my_idx].score;
+			modify_btn = true;
+			write_btn.innerHTML = "수정";
+			writing_commentbox.value = comments_obj_arr[login_user.my_idx].comments;
+			removeDarken();
+			window.scrollTo(0, 300);
+		});
+		
+			//삭제 버튼의 이벤트 처리
+		document.getElementById("my_comments_delete").addEventListener("click", () => {
+
+			if (confirm("삭제하시겠습니까?") == true) {
+				
+				modify_btn = false;
+				clear_write_comments();
+			}
+		});
+	}
+	
+	//좋아요 +1 한 사람당 한번씩만 줄 수 있게
+	//클릭하면 일단 comment_num, user_key 들고가서 대조
+	//select * from user_like_movie_comment where comment_num and user_key
+	//null이면 들고가기
+	//결과값이 있다 불가능
+	//comment id는 propagation 활용 해봅시다
+	function like_add_event(){
+		let like_btn = document.querySelectorAll(".like_btn");
+		let click_comment_num = document.querySelectorAll(".comments");
+		for(let i = 0; i < like_btn.length; i++){
+			like_btn[i].addEventListener("click", function(e){
+				let target_serial_num = e.target.getAttribute("title");
+				let target_idx_num = e.target.getAttribute("id");
+				let flg = true;
+				
+				//내가 준 코멘트의 고유번호와 이벤트가 발생한 코멘트 객체의 고유번호 대조
+				for(let j =0; j < login_user.comments_like.length; j++){
+					if(target_serial_num == login_user.comments_like[j]){
+						flg = false;
+						alert("좋아요는 게시물 당 한번만 가능합니다");
+						break;
+					}
+				}
+				if(flg == true){
+					comments_obj_arr[target_idx_num].like += 1;
+					login_user.comments_like.push(comments_obj_arr[target_idx_num].serial_num);
+					re_render_comments_list()
+				}
+			
+			});
+		}
+	}
+
+	//******************************    정렬 part   ****************************************//
+	//정렬
+	let sort_date_btn = document.getElementById("sort_date_btn");
+	let sort_like_btn = document.getElementById("sort_like_btn");
+			
+	let sort_date_swicth = true;
+	let sort_like_swicth = true;
+	
+	//시간 순으로 정렬
+	
+	sort_date_btn.onclick = ()=>{
+		sort_date();
+		re_render_comments_list();
+		console.log("작동");
+	}
+	sort_like_btn.onclick = ()=>{
+		sort_like();
+		re_render_comments_list();
+		console.log("작동");
+	}
+			
+	//******************************   평점 스크립트   ****************************************//
+		let stars = document.querySelectorAll(".stars");
+		let click_star_value = 0;
+		let flg = false;
+		
+		function addEvent(start){
+			stars = document.querySelectorAll(".stars");
+			if(start == null){
+				start = 0;
+			}
+			for(let i = start; i < stars.length; i++){
+				
+				stars[i].addEventListener("mouseenter", () =>  lightenStar(i));
+				stars[i].addEventListener("mouseleave", () => darkenStar(start, i));
+			}
+		}	
+		
+		function addClickEvent(){
+			
+			stars = document.querySelectorAll(".stars");
+			for(let i = 0; i < stars.length; i++){
+				stars[i].addEventListener("click", (e) => {
+					//같은별 클릭했을 경우
+					if(click_star_value == stars[i].value){
+						click_star_value = 0;
+						e.target.checked = false;
+					//다른 별 클릭했을 경우
+					}else{
+						click_star_value = stars[i].value;
+						for(let j = click_star_value; j < stars.length; j++){
+							stars[j].style.content = "url(resources/images/1emptystar.png)";
+						}
+					}
+				});
+			}
+		}
+		
+		function lightenStar(end){
+			
+			for(let j = 0; j <= end; j++){
+				stars[j].style.content = "url(resources/images/1star.png)";
+			}
+		}
+
+		function darkenStar(start, end){
+			
+			for(let j = start; j <= end; j++){
+				if(click_star_value <= j){
+					stars[j].style.content = "url(resources/images/1emptystar.png)";
+				}
+			}
+		}
+		addEvent();
+		addClickEvent();		
+});
+</script>
+<body>
+<div id="headerInput"></div>
+<!-- body start -->
+<%
+String message = (String)session.getAttribute("message");
+if(message != null){
+%>	
+	<script>alert("${message}");</script>
+<%
+	session.removeAttribute("message");
+}
+%>
+<div id="contents">
+	<div id="contents_movie_detail">
+		<div id="movie_datail_upper">
+			<div id="movie_poster">
+				<img src="resources/images/movie_poster/더_마블스.jpg" alt="더_마블스.jpg">
+			</div>
+			<div id="movie_info">
+				<div id="movie_info_title">
+					<h1>더 마블스</h1>
+				</div>
+				<div>
+					<h4>감독: 김민성</h4>
+					<h4>배우: 김민성,김민성,김민성,김민성,김민성</h4>
+					<h4><span>드라마</span><span>대한민국</span><span>130분</span><span>2023.10.25</span></h4>
+				</div>
+				<div id="movie_info_synopsis">
+					<p>
+					</p>
+				</div>
+				<div id="movie_info_ticketing">
+					<a href="/ticketing.html?movie=">
+						<div>예매하기</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<div id="still_cut_list">
+			<div id="still_cut_slider">
+		<%for(int i=0 ; i<10; i++){ %>
+			<img src="resources/images/movie_poster/더_마블스.jpg" alt="더_마블스.jpg">
+		<%} %>
+			</div>
+		</div>
+		
+	</div>
+	<div id="contents_movie_comments">
+		<h2>한줄평</h2>
+		<div id="comments_sort_btn">
+			<button class = "sort_btn" id="sort_date_btn">날짜 별로 정렬</button><button class = "sort_btn" id="sort_like_btn">좋아요 순으로 정렬</button>
+		</div>
+		<form action="moviedetail" method="post">
+		<div id="write_comments">
+			<div id="rating_star">
+				<input type="radio" name="comment_score" id="1star" value="1" class="stars">
+				<input type="radio" name="comment_score" id="2star" value="2" class="stars">
+				<input type="radio" name="comment_score" id="3star" value="3" class="stars">
+				<input type="radio" name="comment_score" id="4star" value="4" class="stars">
+				<input type="radio" name="comment_score" id="5star" value="5" class="stars">
+			</div>
+			<div>
+				
+			</div>
+			<input id="writing_commentbox" type="text" name="comment_content" placeholder="최대 50글자를 입력해주세요" maxlength="50">
+			<input type="hidden" id="movie_cd" name="movie_cd" value="${movie_cd }"><!-- 영화정보같이 -->
+			<input type="hidden" id="user_key" name="user_key" value="${login_user_key }">
+			<button id="write_btn">쓰기</button><!-- 버튼 이벤트 구현 -->
+		</div>
+		</form>
+		<div id="movie_comments_list">
+			
+			<% ArrayList<MovieCommentDTO> commentlist= (ArrayList<MovieCommentDTO>)request.getAttribute("commentlist");
+			String login_user_id = (String)session.getAttribute("login_user_id");
+			if(login_user_id == null){
+				login_user_id = "";
+			}
+			for(MovieCommentDTO dto : commentlist){ 
+				//if(로그인 유저의 키 == dto.user_key)
+			%>
+				<div class="comments" id='<%=dto.getComment_num() %>'>
+					<div>
+						<div class="comments_id" style="display: inline-block">
+							<%=dto.getUser_id() %>
+						</div>
+						<span>
+							평점 <%=dto.getComment_score() %>
+						</span>
+						<div class="like_btn" id='<%=dto.getComment_num() %>' style="display: inline-block">
+							<img src="resources/images/like.png"  ><%=dto.getComment_like() %>
+						</div>
+					</div>
+					
+					<div>
+						<div class="comments_date" style="display: inline-block">
+							<%=dto.getComment_write_date() %>
+						</div>
+						<%if(login_user_id.equals(dto.getUser_id())){
+							%>
+						<div id="my_comment_modify_part" style="display: inline-block">
+							<button id="my_comments_modify_btn" title="<%=dto.getComment_num() %>">수정</button>
+							<button id="my_comments_delete" title="<%=dto.getComment_num() %>">삭제</button>
+							
+						</div>
+						<%}%>
+					</div>
+					<div class="comments_contents">
+						<%=dto.getComment_content() %>
+					</div>
+				</div>
+			<%} %>
+		</div>
+		<button id="more_comments_btn"></button>
+	</div>
+
+
+</div>
+
+
+<!-- body end -->
+<div id="footerInput"></div>
+</body>
+
+
+
+
+</html>

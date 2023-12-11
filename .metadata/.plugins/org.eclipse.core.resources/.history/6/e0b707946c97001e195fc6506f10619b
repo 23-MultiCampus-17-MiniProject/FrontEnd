@@ -1,0 +1,105 @@
+$(document).ready(function(){
+
+	let commentsStart = 10; //moviedetail 시작시에 처음 페이지에는 몇개를 띄워줄지 정보를 넘겨받는 걸로
+		$("#more_comments_btn").on("click", function(){
+			let commentsCount = 10;
+			let hidden_movie_cd = $("#hidden_movie_cd").val();
+			let hidden_login_user_id = $("#hidden_login_user_id").val();
+			$.ajax({
+				url: "morecomment",
+				data:{'movie_cd': hidden_movie_cd, 'commentsCount': commentsCount, 'commentsStart': commentsStart},
+				type: 'post',
+				dataType: 'json',
+				success: function(response){
+					if(response == null){
+						$("#more_comments_btn").attr("style", "display:none");
+					}else{
+						console.log("response.length"+response.length);
+						for(let i = 0; i < response.length; i++){
+							console.log("반복문: "+i);
+							let part = "";
+							if(hidden_login_user_id == response[i].user_id){
+								part = `
+									<div id="my_comment_modify_part" style="display: inline-block">
+										<form id="updateform" action="updatemoviecomment" method="post" style="display: none">
+											<input type="hidden" name="comment_num" value="${response[i].comment_num}">
+											<input type="hidden" name="movie_cd" value="${response[i].movie_cd}">
+											<select id="update_score" name="comment_score">
+												<option value="0">0
+												<option value="1">1
+												<option value="2">2
+												<option value="3">3
+												<option value="4">4
+												<option value="5">5
+											</select>
+											<textarea id="updateform_content" name="comment_content" ></textarea>							
+											<button id="my_comments_modify_confirm_btn">수정확인</button>
+										</form>
+											<button id="my_comments_modify_cancel_btn" style="display: none">취소</button>
+											<button id="my_comments_modify_btn">수정</button>
+										<form id="deleteform" action="deletemoviecomment" method="post" style="display: inline-block">
+											<input type="hidden" name="comment_num" value="${response[i].comment_num}">
+											<input type="hidden" name="movie_cd" value="${response[i].movie_cd}">
+											<button id="my_comments_delete_btn">삭제</button>
+										</form>
+									</div>	
+								`;
+							}
+
+							document.getElementById("movie_comments_list").innerHTML+=`
+							<div class="comments" id='${response[i].comment_num}'>
+								<div>
+									<div class="comments_id" style="display: inline-block">
+										${response[i].user_id}
+									</div>
+									<span>
+										평점
+									</span>
+									<span class="comment_score">
+										${response[i].comment_score}
+									</span>
+									<div class="like_btn"  style="display: inline-block">
+										<img src="resources/images/like.png"  ><span class="comment_like">${response[i].comment_like}</span>
+									</div>
+								</div>
+								
+								<div>
+									<div class="comments_date" style="display: inline-block">
+										${response[i].comment_write_date}
+									</div>
+									${part}
+								</div>
+								<div class="comments_contents">
+									${response[i].comment_content}
+								</div>
+							</div>`
+						}//for end
+						add_comment_event();
+					}//if-else end
+				},//success end
+				error: function(request, e){
+					alert("코드=" + request.status + " 메세지=" + request.responseText + " 오류=" + e);
+				}
+			});
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+	
+
+	
+	
+	
+			

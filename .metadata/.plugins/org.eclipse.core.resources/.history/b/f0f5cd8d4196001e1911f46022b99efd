@@ -1,0 +1,6 @@
+package com.mc.multicinema;
+
+public interface MovieService {
+	
+	
+}

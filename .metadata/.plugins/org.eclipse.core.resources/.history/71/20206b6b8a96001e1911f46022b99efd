@@ -1,0 +1,15 @@
+package com.mc.multicinema.user.service;
+
+import com.mc.multicinema.user.dto.UserDTO;
+
+public class UserServiceImpl implements UserService{
+
+	@Override
+	public UserDTO login(String user_id, String user_pw) {
+		
+		
+		return null;
+	}
+	
+
+}

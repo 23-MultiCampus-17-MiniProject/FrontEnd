@@ -1,0 +1,235 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>최고의 영화관. MultiCinema</title>
+<link rel="stylesheet" type="text/css" href="resources/css/index.css">
+</head>
+<header class="body">
+	<div class="header">
+		<h1 class="mainlogo">
+			<a href="main_signout.html" title="홈화면으로 가기">홈으로가기</a>
+		</h1>
+		<div class="myinformation">
+			<a href="login.html">로그인하기</a>
+			<a href="join_confirm.html">회원가입</a>
+		</div>
+	</div>
+		
+	<hr>
+	<ul id="mainNavigator">
+		<li id="movie"><a href="movie.html">영화</a></li>
+		<li id="ticketing"><a href="tiketing.html">예매</a></li>
+		<li id="theater"><a href="theater.html">영화관</a></li>
+	</ul>
+	<hr>
+</header>
+<link rel="stylesheet" type="text/css" href="resources/css/mainpage.css">
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script src="resources/js/mainpage_1.js"></script>
+<script>
+
+
+$(document).ready(function(){
+	let today = new Date();
+	let hour = today.getHours();
+	let oneDay = 86400000;
+	let numberDate = "";
+	let yesterday = "";
+
+	function yyyyMMdd(dt){
+	
+		let year = dt.getFullYear(); 
+		let month = dt.getMonth() + 1;  
+		let date = dt.getDate();
+		
+		month = month >= 10 ? month : '0' + month;
+		date = date >= 10 ? date : '0' + date;
+		
+		let res = "".concat(year,month,date);
+		
+		return res;
+	}
+
+	if(hour >= 18){
+		numberDate = yyyyMMdd(today);
+	}else{
+		yesterday = new Date(today-oneDay);
+		numberDate = yyyyMMdd(yesterday);
+	}
+	
+	let test = "20231201";
+	
+	console.log(numberDate)
+	console.log(yesterday)
+	console.log(test);
+
+	
+	$.ajax({
+		url: "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json",
+		method: "GET",
+		dataType: 'json',
+		data:{
+			key: "f0b5971de85c22ab8010d759968eef23",
+			itemPerPage: "10",
+			targetDt: numberDate
+		}
+		
+	}).done(function(msg){
+		
+		let result = "";
+		for(let i=0; i<msg.boxOfficeResult.dailyBoxOfficeList.length; i++){
+			let movie = msg.boxOfficeResult.dailyBoxOfficeList[i];
+			
+			result += "<b>" + i + "</b>"
+			result += "<b>영화제목: " + short_url.movieNm + "</b>"
+			result += ", <b>영화순위: " + short_url.rank + "</b>"
+			result += ", <b>영화코드: " + short_url.movieCd +"</b><br>"
+		}
+		
+	
+	
+	let movie_arr = [{title:"더 마블스", score:90, grade:15},{title:"이웃집 토토로", score:80, grade:18},
+	{title:"암살", score:85, grade:12},{title:"범죄도시2", score:65, grade:"ALL"},{title:"1917", score:75, grade:"ALL"},
+	
+	{title:"1917", score:75, grade:"ALL"},{title:"1917", score:75, grade:"ALL"},{title:"1917", score:75, grade:"ALL"}];
+	
+	movie_arr.sort((a,b) => b.score - a.score);//평점순으로 내림차순 정렬
+	
+	
+	let movie_title = document.getElementsByClassName("movie_title");
+	let movie_btn = document.querySelectorAll(".movie_btn a");
+	let movie_detail = document.getElementsByClassName("movie_detail");
+	
+	
+	let movie_info_score = document.getElementsByClassName("movie_info_score");
+	//평점이나 예매율은 나중에 팀이랑 물어보고
+	
+//	let movie_grade
+
+
+	function spaceTo_(str){
+		let result = str.replace(" ", "_");
+		while(result.indexOf(" ") != -1){
+			let tmp = result.replace(" ", "_");
+			result = tmp;
+		}
+		return result;
+	}
+	
+	function ageLimitUrl(grade){
+		if(grade == "ALL"){
+			return "resources/images/age_grade/ALL.png"
+		}else if(grade == 12){
+			return "resources/images/age_grade/12.png"
+		}else if(grade == 15){
+			return "resources/images/age_grade/15.png"
+		}else if(grade == 18){
+			return "resources/images/age_grade/18.png"
+		}
+	}
+	
+	let movieList = document.getElementById("movieList");
+	function movie_maker(movie, idx){
+		movieList.style = "width:" + Math.ceil(movie_arr.length / 5) * 1392.5 + "px";
+		movieList.innerHTML += `
+			<div class="movie">
+				<div class = "img_wrap">
+					<img src= "resources/images/movie_poster/${spaceTo_(movie.title)}.jpg" alt="${movie.title}" >
+					<div class="movie_detail_wrap" style="visibility: hidden">
+						<a href="detail.html?movie_title=${spaceTo_(movie.title)}" class="movie_detail" >
+							<div class="movie_detail_btn">상세보기</div>
+						</a>
+					</div>
+					<div class = "age_limit_icon">
+						<img src="${ageLimitUrl(movie.grade)}">
+					</div>
+					<div class = "rank">movie.rank</div>
+				</div>
+				<div class = "movie_info">
+					<div class="movie_title">movie.movieNm</div>
+					<span class="movie_info_score">평점 </span><span>예매율 </span>
+				</div>
+				<div class = "movie_btn">
+					<div class = "ticket_btn"><a href="ticketing.html?movie_title=${movie.title}"> 예매하기 </a></div><div class = "review_btn"><a href="review.html?movie_title=${movie.title}"> 리뷰보기 </a></div>
+				</div>
+			</div>`
+
+	}
+	
+	function add_event(){
+		
+		let movie_poster_frame = document.querySelectorAll(".movie > .img_wrap > img");
+		let movie_grade_frame = document.querySelectorAll(".movie > .img_wrap > .age_limit_icon > img");
+		let movie_detail_wrap = document.getElementsByClassName("movie_detail_wrap");
+		let movie_detail_btn = document.getElementsByClassName("movie_detail_btn");
+		for(let i =0; i < movie_poster_frame.length; i++){
+			movie_poster_frame[i].addEventListener("mouseenter", ()=>{
+				movie_detail_wrap[i].style = "visibility: visible";
+			})
+			movie_detail_wrap[i].addEventListener("mouseleave", e =>{
+				e.target.style = "visibility: hidden";
+			})
+		
+			movie_detail_btn[i].addEventListener("mouseenter", e =>{
+				e.target.style = "background-color: rgb(254, 228, 1)"
+			})
+			movie_detail_btn[i].addEventListener("mouseleave", e =>{
+				e.target.style = "background-color: white"
+			})
+		}
+	}
+	
+	for(let i = 0; i < movie_arr.length; i++){
+		movie_maker(movie_arr[i], i);
+	}
+	add_event();
+	
+	let btn_left = document.getElementById("slide_btn_left");
+	let btn_right = document.getElementById("slide_btn_right");
+	var current_page = 1;
+	let end_page = Math.ceil(movie_arr.length / 5);
+	console.log(movie_arr.length);
+	console.log(Math.ceil(movie_arr.length / 5));
+	
+	btn_right.addEventListener('click', function(){
+		if(end_page != current_page){
+			document.getElementById("movieList").style.transform = "translate(-" + (1428 * current_page) + "px)"
+			document.getElementById("movieList").style.transitionProperty = "transition-property: transform;";
+			document.getElementById("movieList").style.transitionDuration = "0.5s";
+			current_page++;
+			console.log(current_page);
+		}
+	});
+	btn_left.addEventListener('click', function(){
+		if(current_page != 1){
+			current_page--;
+			document.getElementById("movieList").style.transform = "translate(-" + (1428 * (current_page - 1))+ "px)"
+			document.getElementById("movieList").style.transitionProperty = "transition-property: transform;";
+			document.getElementById("movieList").style.transitionDuration = "0.5s";
+			console.log(current_page);
+			
+		}
+	});
+})
+</script>
+</head>
+<body>
+		<div id="contents"><!--박스오피스 칸-->
+			<div id="boxoffice">박스오피스
+				
+			</div>
+			<div id ="slide_btn">
+				<button id="slide_btn_left"> < </button><button id="slide_btn_right"> > </button>
+			</div>
+			<div id="movieChart">
+				<div id="movieList">
+					
+				</div>
+			</div>
+		</div>
+</body>
+</html>

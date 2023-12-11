@@ -1,0 +1,32 @@
+package com.mc.multicinema.moviecomment.service;
+
+import java.util.HashMap;
+
+import org.springframework.stereotype.Service;
+
+import com.mc.multicinema.moviecomment.dao.MovieCommentDAO;
+import com.mc.multicinema.moviecomment.dto.MovieCommentDTO;
+
+@Service
+public class MovieCommentServiceImpl implements MovieCommentService{
+	MovieCommentDAO dao;
+	
+	@Override
+	public int insertMovieComment(MovieCommentDTO dto) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("user_key", dto.getUser_key());
+		map.put("movie_cd", dto.getMovie_cd());
+		
+		System.out.println("============="+dto.getUser_key() +"/"+ dto.getMovie_cd()+"=============");
+		MovieCommentDTO result = dao.selectOneMovieComment(map);
+		if(result != null) {
+			return -2;
+		}else {
+			return dao.insertMovieComment(dto);
+		}
+		
+	}
+	
+	
+	
+}

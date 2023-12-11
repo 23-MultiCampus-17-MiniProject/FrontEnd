@@ -1,0 +1,13 @@
+package com.mc.multicinema;
+
+import java.util.ArrayList;
+
+import DTO.MovieCommentDTO;
+import DTO.MovieDTO;
+
+public interface MovieService {
+	public ArrayList<DailyBoxOfficeDTO> dailyBoxOffice();
+	public MovieDTO movieDetailInfo(String movieCd);
+	public MovieCommentDTO movieComment(String movieCd);
+	
+}

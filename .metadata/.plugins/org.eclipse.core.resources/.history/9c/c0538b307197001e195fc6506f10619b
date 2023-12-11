@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="moviecomment">
+<insert id="insertMovieComment" parameterType="mcommentdto">
+insert into movie_comment(user_key, comment_write_date, movie_cd, comment_content, comment_score) 
+values(#{user_key}, now(), #{movie_cd}, #{comment_content}, #{comment_score})
+</insert>
+<select id="selectMovieCommentInit" parameterType="hashmap" resultType="mcommentdto">
+select comment_num, user_key, user_id, comment_write_date , movie_cd , comment_content, m.is_deleted, comment_like, comment_score
+from movie_comment m
+join user_info u using(user_key)
+where movie_cd = #{movie_cd} and m.is_deleted = false order by comment_write_date desc limit 0, #{commentsCount}
+</select>
+<select id="selectOneMovieComment" parameterType="hashmap" resultType="mcommentdto">
+select * from movie_comment where user_key = #{user_key} and movie_cd = #{movie_cd};
+</select>
+<select id="selectOneLike" parameterType="hashmap" resultType="String">
+select user_key from user_like_movie_comment where comment_num = #{comment_num} and user_key = #{user_key}
+</select>
+<insert id="insertOneLike" parameterType="hashmap">
+insert into user_like_movie_comment(user_key, comment_num) values(#{user_key}, #{comment_num})
+</insert>
+<update id="updateOneLike" parameterType="hashmap">
+update movie_comment set comment_like = comment_like + 1 where comment_num = #{comment_num}
+</update>
+<delete id="deleteComment" parameterType="int">
+delete from movie_comment where comment_num = #{comment_num}
+</delete>
+<delete id="deleteCommentLike" parameterType="int">
+delete from user_like_movie_comment where comment_num = #{comment_num}
+</delete>
+<update id="updateMovieComment" parameterType="mcommentdto">
+update movie_comment set comment_content = #{comment_content}, comment_score = #{comment_score},
+comment_write_date = now() where comment_num = #{comment_num}
+</update>
+<select id="selectListComment" parameterType="hashmap" resultType="mcommentdto">
+select comment_num, user_key, user_id, comment_write_date , movie_cd , comment_content, m.is_deleted, comment_like, comment_score
+from movie_comment m
+join user_info u using(user_key)
+where movie_cd = #{movie_cd} and m.is_deleted = false order by comment_write_date desc, comment_num desc limit #{commentsStart}, #{commentsCount}
+</select>
+</mapper>

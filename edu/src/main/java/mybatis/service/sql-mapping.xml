@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!-- mapper 태그가 대장이야 -->
+  
+<mapper namespace="a"><!-- 같은 이름의 id가 있을수 있기때문에 구분용 -->
+<!-- id:자바에서 갖다쓰기위한 이름 / resultType: sql결과물을 어떤 타입으로 받을건지-->
+<!-- memberid 컬럼 => MemberDTO.memberid 변수에 그대로 값들어감 -->
+	<select id="memberList" resultType="memberdto"> 
+	select * from members <!-- ; 안붙여도됨 -->
+	</select>
+	<select id="oneMember" resultType="memberdto" parameterType="String">
+								<!-- #{파라미터 명} 자바에서 넣어줄 때 쓰는 이름 뭐든 상관없음 string일시엔 /parameterType 이 파라미터의 타입-->
+	select * from members where memberid = #{memberid}
+	</select>
+<!--	<select id="memberList2" resultType="mybatis.MemberDTO" parameterType="String">
+	select * from members where membername like #{membername}
+	</select>
+	-->
+	<select id="memberList2" resultType="memberdto" parameterType="String">
+	select * from members where membername like concat('%',#{membername},'%')
+												<!--sql 함수 사용 -->
+	</select>
+	<insert id="insertMember">
+	insert into members values ('mybatis2','1111','박진주','010-9923-2012','awdsa@soqp.com', now())
+	</insert>
+	
+	<insert id="insertMemberDTO" parameterType="memberdto">
+	insert into members values (#{memberid},#{pw},#{membername},#{phone},#{email}, now())
+	</insert>
+	<!-- DTO를 파라미터 타입으로 쓸땐 변수와 같은 이름으로 왜냐 get메서드로 가지고 오기때문 -->
+	<update id="updateMember" parameterType="memberdto">
+	update members set membername = #{membername}, phone = #{phone}, email = #{email} where memberid = #{memberid}
+	</update>
+	<delete id="deleteMember" parameterType="String">
+	delete from members where memberid = #{a}
+	</delete>
+</mapper>

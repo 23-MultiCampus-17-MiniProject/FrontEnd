@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+
+
+ #myPage_navigater{
+	border-top : 1px solid darkgray;
+	width :200px;
+	height: 700px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+#myPage_navigater> div {
+	width : 200px;
+	height : 50px;
+	line-height: 50px;
+	text-align: center;
+	vertical-align : middle;
+}
+
+#myPage_navigater> hr {
+	width : 200px;
+}
+
+#myPage_main {
+	display: inline-block;
+	vertical-align: middle;
+	align-items: center;
+	width : 700px;
+	height: 700px;
+}
+
+#myPage_main > .myPage_main_header{
+	width : 150px;
+	height : 50px;
+	text-align: center;
+	line-height : 50px;
+}
+
+#myPage_main table{
+	border : 1px solid gray;
+	border-collapse: collapse;
+}
+
+#myPage_main table tr{
+	width:700px;
+	height : 50px;
+	border : 1px solid gray;
+	border-collapse: collapse;
+}
+
+/*이미지 칸 */
+#myPage_main table tr td:nth-child(1){
+	width:70px;
+	height : 70px;
+	border : 1px solid gray;
+	border-collapse: collapse;
+	text-align: center;
+	line-height: 50px;
+}
+
+/*제목 칸 */
+#myPage_main table tr td:nth-child(2){
+	width:430px;
+	height : 70px;
+	border : 1px solid gray;
+	border-collapse: collapse;
+	line-height: 50px;
+}
+
+/*날짜 칸 */
+#myPage_main table tr td:nth-child(3){
+	width:200px;
+	height : 70px;
+	border : 1px solid gray;
+	border-collapse: collapse;
+	line-height: 50px;
+}
+
+#myPage_main > div.change_button {
+	display : inline-block;
+	text-align:center;
+	line-height: 50px;
+	border: 1px solid gray;
+	width :200px;
+	height:50px;
+}

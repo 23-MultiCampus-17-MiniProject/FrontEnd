@@ -1,0 +1,65 @@
+package board.spring.mybatis;
+
+import java.time.LocalDateTime;
+
+public class BoardDTO {
+	String title;
+	String contents;
+	String writer;
+	String pw;
+	int viewcount;
+	String writingtime;
+	
+	public BoardDTO() {
+		
+	}
+	
+	
+	public BoardDTO(String title, String contents, String writer, String pw) {
+		super();
+		this.title = title;
+		this.contents = contents;
+		this.writer = writer;
+		this.pw = pw;
+		this.viewcount = 0;
+	}
+
+
+
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+	public int getViewcount() {
+		return viewcount;
+	}
+	public void setViewcount(int viewcount) {
+		this.viewcount = viewcount;
+	}
+	public String getWritingtime() {
+		return writingtime;
+	}
+	public void setWritingtime(String writingtime) {
+		this.writingtime = writingtime;
+	}
+}

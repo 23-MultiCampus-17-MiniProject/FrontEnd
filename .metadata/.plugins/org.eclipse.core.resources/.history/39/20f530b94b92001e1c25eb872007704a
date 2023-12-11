@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- resources에 넣은건 /resources 넣어서 접근하도록해 -->	<!-- static: mvc와 상관없는 것들(jsp, class, xml제외 나머지들) -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/upload/**" location="file:///c:/fullstack/upload/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" /><!--  여기에다 넣어 -->
+		<beans:property name="suffix" value=".jsp" /><!--  너의 뷰는 이제 .jsp만 쓸수 있어 -->
+	</beans:bean>
+	
+	<!-- annotation 썼으니 여기 패키지에서 찾아라 -->
+<!-- 	<context:component-scan base-package="edu.multi.mvc" />
+	<context:component-scan base-package="annotation.springmvc" />
+	<context:component-scan base-package="annotation.movie" />
+	<context:component-scan base-package="annotation.spring.memberservice" /> -->
+	<!-- <context:component-scan base-package="spring.mybatis.service"/> -->
+<!-- 	<context:component-scan base-package="upload"/>
+	<context:component-scan base-package="ajax"/> -->
+	<context:component-scan base-packge=" board.spring.mybatis" />
+	
+	<!--  파일 업로드 설정 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	
+	<!-- 사용자 추가 -->
+	<beans:bean id="hellocontroller" class="springmvc.HelloController"/>
+	<beans:bean id="listcontroller" class="springmvc.ListController"/>
+	<beans:bean id="loginformcontroller" class="loginmvc.LoginFormController"/>
+	<beans:bean id="loginresultcontroller" class="loginmvc.LoginResultController"/>
+	
+	<!-- 매핑 -->
+	<beans:bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<beans:property name="mappings">
+			<beans:props >
+				<beans:prop key="/hello">hellocontroller</beans:prop>
+				<beans:prop key="/list">listcontroller</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	<beans:bean id="urlMapping_loginForm" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<beans:property name="mappings">
+			<beans:props >
+				<beans:prop key="/loginform">loginformcontroller</beans:prop>
+				<beans:prop key="/loginresult">loginresultcontroller</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+</beans:beans>

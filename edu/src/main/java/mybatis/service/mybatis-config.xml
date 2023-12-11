@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- 이걸로 시작하는게 xml파일 국룰 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd"> <!-- mybatis 모든 설정파일 처음에 오는 것 -->
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="mybatis.service.MemberDTO" alias="memberdto"/><!-- mybatis.MemberDTO 타입을 memberdto이름으로 -->
+	</typeAliases>
+	<environments default="mydb">
+		<environment id="mydb"> <!-- environment: datasource 사용 위한 정보 알려주기 -->
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.cj.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/backenddb"/>
+				<property name="username" value="backend"/>
+				<property name="password" value="backend"/>
+			</dataSource>
+		</environment> 
+	</environments>
+	
+	<mappers>
+		<mapper resource="mybatis/service/sql-mapping.xml"/> <!-- sql정의해놓은 xml파일이 어딨는지 알려주기 -->
+		<mapper resource="mybatis/service/dynamicsql-mapping.xml"/>
+	</mappers>
+
+
+</configuration>

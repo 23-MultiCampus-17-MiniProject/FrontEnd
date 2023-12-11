@@ -1,0 +1,61 @@
+@charset "UTF-8";
+#container{
+		height: 600px;
+	}
+	#contents{
+		height: 700px;
+		width: 800px;
+		margin:0 auto;
+		
+	}
+	#contents_header{
+		margin:50px;
+		text-align: center;
+	}
+	
+	table{
+		width:700px;
+		height: 500px;
+		margin:0 auto;
+		
+	}
+	table th {
+		background-color: rgb(192, 192, 192,0.3);
+		
+	}
+	
+	table td{
+		border-bottom: rgb(192, 192, 192 ,0.5) 1px solid;
+	
+		
+	}
+	input{
+		width: 400px;
+	}
+	
+	p{
+		margin: 0px;
+		color: red;
+		font-size: 11px;
+	}
+	
+	#btn_join > div{
+		
+		background-color: rgb(254, 228, 1);
+		border-radius: 10px;
+		width: 130px;
+		height: 60px;
+		line-height: 60px;
+	}
+	
+	#btn_join_wrap{
+		width: 130px;
+		margin: 0 auto;
+		margin-top: 30px;
+		text-align: center;
+	}
+	
+	#btn_join{
+		text-decoration: none;
+		color: black;
+	}

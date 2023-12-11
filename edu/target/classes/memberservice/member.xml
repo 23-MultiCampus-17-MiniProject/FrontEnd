@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- <bean id="dto2" class="memberservice.MemberDTO" scope="singleton, prototype"> 
+기본 singleton 쓰던거 계속/ prototype 매번 새로운 객체
+-->
+
+<bean id="dto2" class="memberservice.MemberDTO"> <!-- 기본생성자 호출 -->
+	<property name="memberid" value="spring2" />
+	<property name="pw" value="4321" />
+	<property name="membername" value="홍길동" />
+	<property name="phone" value="010-1230-2140" />
+	<property name="email" value="12321@adkoawp.com" />
+	<property name="regdate" value="2013-11-24 12:21:10" />
+</bean>
+<bean id="dto1" class="memberservice.MemberDTO">
+	<property name="memberid" value="spring" />
+	<property name="pw" value="1234" />
+	<property name="membername" value="홍길동" />
+	<property name="phone" value="010-1230-2140" />
+	<property name="email" value="12321@adkoawp.com" />
+	<property name="regdate" value="2013-11-24 12:21:10" />
+</bean>
+<!-- 기본생성자가 아닌 매개변수있는 생성자로 객체 생성시 -->
+<bean id="dto3" class="memberservice.MemberDTO">
+	<constructor-arg name="memberid" value="spring3" />
+	<constructor-arg name="pw" value="4321"  />
+	<constructor-arg name = "membername" value="홍길동" />
+	<constructor-arg name = "phone" value="010-1230-2140" />
+	<constructor-arg name = "email" value="12321@adkoawp.com" />
+	<constructor-arg name = "regdate" value="2013-11-24 12:21:10" />
+</bean>
+
+<bean id="dao" class="memberservice.MemberDAO">
+	<property name="dto" ref="dto1" />	
+</bean>
+
+<bean id="pointdao" class="memberservice.PointDAO">
+	<property name="point" value="10000" />
+</bean>
+<bean id="service2" class="memberservice.MemberJanService">
+	<property name="memberdao" ref="dao" />
+	<property name="pointdao" ref="pointdao" />
+</bean>
+
+<bean id="service1" class="memberservice.MemberBasicService">
+	<property name="dao" ref="dao" />
+</bean>
+
+</beans>

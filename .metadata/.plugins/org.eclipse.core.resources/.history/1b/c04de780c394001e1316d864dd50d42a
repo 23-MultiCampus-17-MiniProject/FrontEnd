@@ -1,0 +1,9 @@
+package com.mc.multicinema;
+
+public class ScreeningScheduleDTO {
+	
+	int sch_id;
+	int theater_id;
+	int movie_cd;
+	String sch_time;
+}

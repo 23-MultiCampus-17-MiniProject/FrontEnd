@@ -1,0 +1,55 @@
+package com.mc.multicinema;
+
+public class DailyBoxOfficeDTO {
+	String movieNm;
+	String movieCd;
+	String rank;
+	String grade;
+	
+	public DailyBoxOfficeDTO() {
+		
+	}
+	
+	public DailyBoxOfficeDTO(String movieNm, String movieCd, String rank) {
+		super();
+		this.movieNm = movieNm;
+		this.movieCd = movieCd;
+		this.rank = rank;
+		this.grade = grade;
+	}
+	
+	public DailyBoxOfficeDTO(String movieNm, String movieCd, String rank, String grade) {
+		super();
+		this.movieNm = movieNm;
+		this.movieCd = movieCd;
+		this.rank = rank;
+		this.grade = grade;
+	}
+
+	public String getMovieNm() {
+		return movieNm;
+	}
+	public void setMovieNm(String movieNm) {
+		this.movieNm = movieNm;
+	}
+	public String getMovieCd() {
+		return movieCd;
+	}
+	public void setMovieCd(String movieCd) {
+		this.movieCd = movieCd;
+	}
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	
+	
+}

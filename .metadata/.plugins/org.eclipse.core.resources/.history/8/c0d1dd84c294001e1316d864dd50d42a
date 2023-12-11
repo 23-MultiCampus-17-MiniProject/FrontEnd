@@ -1,0 +1,13 @@
+package com.mc.multicinema;
+
+public class ReviewReply {
+	int reply_num;
+	int board_num;
+	int user_key;
+	String reply_content;
+	String reply_write_date;
+	int reply_like_count;
+	int reply_dislike_count;
+	boolean is_deleted;
+	String deleted_date;
+}

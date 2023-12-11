@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+<bean id="member" class="aop1.Member" />
+<bean id="board" class="aop1.Board" />
+<bean id="common" class="aop1.Common" />
+<aop:config>
+	<aop:pointcut expression="execution(* aop1..*.*(..))" id="pc"/>
+	<!--  modifier가 public 이고 반환타입 상관없고(*) aop1 패키지의 모든 클래스(*) 모든 메서드(*) 매개변수도 상관없다(..) -->
+	<!-- 이 조건의 이름 " -->
+	<aop:aspect id="advice" ref="common">
+		<!-- <aop:before method="a" pointcut-ref="pc"/>
+		<aop:after method="b" pointcut-ref="pc"/> -->
+		<aop:around method="c" pointcut-ref="pc"/>
+	</aop:aspect>
+	<!-- 위의 조건(pc)에 부합하는 메서드에 Common common.a()를 끼워넣을것 언제 끼울거냐 메서드 실행전에 (before)-->
+	<!-- around = 시작 이전(before) + 시작 이후(after) -->
+</aop:config>
+</beans>

@@ -1,0 +1,8 @@
+package com.mc.multicinema;
+
+public class CinemaDTO {
+	
+	int cinema_id;
+	String cinema_name;
+	String cinema_location;
+}
