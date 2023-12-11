@@ -116,9 +116,6 @@ public class MovieServiceImpl implements MovieService{
 		return list;
 	}
 	
-	
-	
-	
 	private String readBoxOfficeUrl() throws Exception {
 		BufferedInputStream reader = null;
 		String key = "f0b5971de85c22ab8010d759968eef23";
